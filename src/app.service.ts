@@ -38,8 +38,13 @@ export class AppService {
 
   async updateTask(body): Promise<any> {
     const id = body["id"];
-    await this.tasksRepository.update(id, body);
-    return { message: `task ${id} was updated` }
+    const task = await this.tasksRepository.findOne({ where: { id: id } });
+    if (!task) {
+      throw new NotFoundException(`No task ${id} found`);
+    } else {
+      await this.tasksRepository.update(id, body);
+      return { message: `task ${id} was updated` }
+    }
   }
 
 
@@ -47,7 +52,7 @@ export class AppService {
     const id = body["id"];
     const task = await this.tasksRepository.findOne({ where: { id: id } });
     if (!task) {
-      throw new NotFoundException(`No task with ${id} found`);
+      throw new NotFoundException(`No task ${id} found`);
     } else {
       await this.tasksRepository.delete(id);
       return { message: `task ${id} was deleted` }
