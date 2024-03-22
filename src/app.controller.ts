@@ -17,8 +17,8 @@ export class AppController {
   }
 
   @Post('addtask')
-  addTask(@Body() newtask:JSON): any {
-    return this.appService.addTask(newtask);
+  addTask(@Body() body: { newtask: string }): Promise<{message: string}> {
+    return this.appService.addTask(body);
   }
 
   @Put('updatetask')

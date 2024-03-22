@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tasks } from './app.entity';
@@ -24,11 +24,15 @@ export class AppService {
   }
 
 
-  async addTask(body): Promise<any> {
-    const task = body["newtask"];
-    const newTask = this.tasksRepository.create({ completed: false, task: task, priority: 1 });
-    await this.tasksRepository.save(newTask);
-    return { message: 'task was added' }
+  async addTask(body): Promise<{message: string}> {
+    if (body.hasOwnProperty('newtask')) {
+      const task = body["newtask"];
+      const newTask = this.tasksRepository.create({ completed: false, task: task, priority: 1 });
+      await this.tasksRepository.save(newTask);
+      return { message: 'task was added' }
+    } else {
+      throw new BadRequestException('Invalid json format');
+    }
   }
 
 
