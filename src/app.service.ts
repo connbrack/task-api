@@ -11,7 +11,7 @@ export class AppService {
   ) { }
 
   getHello(): string {
-    return 'Hello World!';
+    return 'Welcome to the tasks API!';
   }
 
   async allTasks(): Promise<Tasks[]> {
