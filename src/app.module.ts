@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TemplateSQL } from './app.entity';
+import { Tasks } from './app.entity';
 
 
 @Module({
@@ -10,10 +10,10 @@ import { TemplateSQL } from './app.entity';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: './database/mydb.sqlite',
-      entities: [TemplateSQL],
+      entities: [Tasks],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([TemplateSQL]),
+    TypeOrmModule.forFeature([Tasks]),
   ],
 
   controllers: [AppController],

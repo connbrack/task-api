@@ -1,13 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class TemplateSQL {
+export class Tasks {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  check: boolean;
+  completed: boolean;
 
   @Column()
-  item: string;
+  task: string;
+
+  @Column()
+  priority: number;
 }
