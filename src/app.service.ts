@@ -19,7 +19,7 @@ export class AppService {
     if (tasks.length === 0) {
       throw new NotFoundException('No entries found');
     } else {
-    return tasks;
+      return tasks;
     }
   }
 
@@ -28,6 +28,25 @@ export class AppService {
     const task = body["newtask"];
     const newTask = this.tasksRepository.create({ completed: false, task: task, priority: 1 });
     await this.tasksRepository.save(newTask);
-    return { message: 'task was added'}
+    return { message: 'task was added' }
+  }
+
+
+  async updateTask(body): Promise<any> {
+    const id = body["id"];
+    await this.tasksRepository.update(id, body);
+    return { message: `task ${id} was updated` }
+  }
+
+
+  async deleteTask(body): Promise<any> {
+    const id = body["id"];
+    const task = await this.tasksRepository.findOne({ where: { id: id } });
+    if (!task) {
+      throw new NotFoundException(`No task with ${id} found`);
+    } else {
+      await this.tasksRepository.delete(id);
+      return { message: `task ${id} was deleted` }
+    }
   }
 }

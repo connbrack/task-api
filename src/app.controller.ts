@@ -20,4 +20,14 @@ export class AppController {
   addTask(@Body() newtask:JSON): any {
     return this.appService.addTask(newtask);
   }
+
+  @Put('updatetask')
+  updateTask(@Body() taskupdate:JSON): any {
+    return this.appService.updateTask(taskupdate);
+  }
+
+  @Delete('deletetask')
+  deleteTask(@Body() taskupdate:JSON): any {
+    return this.appService.deleteTask(taskupdate);
+  }
 }
